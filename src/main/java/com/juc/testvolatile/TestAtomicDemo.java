@@ -1,7 +1,5 @@
 package com.juc.testvolatile;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * @author zhangjin
  * @since 2017/5/24
@@ -24,7 +22,7 @@ public class TestAtomicDemo {
     public static void main(String[] args) {
         AtomicDemo ad = new AtomicDemo();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             new Thread(ad).start();
         }
     }
@@ -32,8 +30,8 @@ public class TestAtomicDemo {
 
 class AtomicDemo implements Runnable {
 
-//    private  int serialNumber = 0;
-    private AtomicInteger serialNumber = new AtomicInteger();
+    private   int serialNumber = 0;
+//    private AtomicInteger serialNumber = new AtomicInteger();
 
     @Override
     public void run() {
@@ -43,17 +41,23 @@ class AtomicDemo implements Runnable {
         } catch (InterruptedException e) {
 
         }
-//        System.out.println(Thread.currentThread().getName() + ":" + getSerialNumber() );
-        System.out.println(getSerialNumber());
+        System.out.println(Thread.currentThread().getName() + ":" + getSerialNumber() );
+//        System.out.println(getSerialNumber());
     }
 
 //
 
+//    public int getSerialNumber() {
+//        return serialNumber.getAndIncrement();
+//    }
     public int getSerialNumber() {
-        return serialNumber.getAndIncrement();
+        return ++serialNumber;
     }
 
-    public void setSerialNumber(AtomicInteger serialNumber) {
+//    public void setSerialNumber(AtomicInteger serialNumber) {
+//        this.serialNumber = serialNumber;
+//    }int
+    public void setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
     }
 }
